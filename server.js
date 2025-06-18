@@ -1,4 +1,3 @@
-// server.js
 const express = require('express')
 const cors = require('cors')
 const dotenv = require('dotenv')
@@ -10,14 +9,14 @@ dotenv.config()
 const app = express()
 const PORT = process.env.PORT || 3001
 
+// ✅ Serve static assets from the /static folder
+app.use('/static', express.static(path.join(__dirname, 'static')))
+
 // Middleware
 app.use(cors())
 app.use(express.json())
 
-// Serve static files from /static path
-app.use('/static', express.static(path.join(__dirname, 'static')))
-
-// API route for tiles
+// API Routes
 const tilesRoute = require('./api/tiles')
 app.use('/api/tiles', tilesRoute)
 
