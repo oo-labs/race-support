@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: race-support-api
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm run start-server
+    envVars:
+      - key: SANITY_PROJECT_ID
+        value: ie8xrz97
+      - key: SANITY_DATASET
+        value: production
+      - key: SANITY_API_TOKEN
+        value: skYevsvTGiaoIVdmy0vNdp8GHjyZihlrnciSqZCHG2paIu67sSAqrqPVw4B9i4yUd4o0JEaO1irh9JwdRGbkEfwklryk70XktGtYLu7PKnYpLhoBtlrBuvlhr8NMFut9yiqvFGpJE7Pz4EIqmfnNs5k8X1CcB5MG13dTJtgsb8f8hCNMfM3H
