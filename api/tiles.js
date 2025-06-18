@@ -22,20 +22,19 @@ const client = createClient({
 })
 
 router.get('/', async (req, res) => {
-  const group = req.query.group || 'race-support';
   console.log(`📡 Querying Sanity with group: ${group}`);
 
-  const query = `*[_type == "uiTile" && group == $group]{
-    _id,
-    title,
-    x,
-    y,
-    width,
-    height,
-    order,
-    link,
-    group
-  }`;
+  const query = `*[_type == "uiTile"]{
+  _id,
+  title,
+  x,
+  y,
+  width,
+  height,
+  order,
+  link,
+  group
+}`;
 
   console.log(`🛰️ Fetching tiles for group: ${group}`);
 
