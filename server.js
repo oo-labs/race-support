@@ -1,31 +1,21 @@
-const express = require('express')
-const cors = require('cors')
-const dotenv = require('dotenv')
-const path = require('path')
+// server.js
+import express from 'express';
+import cors from 'cors';
+import tilesRouter from './api/tiles.js';
 
-// Load environment variables
-dotenv.config()
+const app = express();
+const PORT = process.env.PORT || 3001;
 
-const app = express()
-const PORT = process.env.PORT || 3001
+// 1) Enable CORS for all origins
+app.use(cors());
 
-// ✅ Serve static assets from the /static folder
-app.use('/static', express.static(path.join(__dirname, 'static')))
+// 2) JSON middleware
+app.use(express.json());
 
-// Middleware
-app.use(cors())
-app.use(express.json())
+// 3) Mount the tiles API
+app.use('/api', tilesRouter);
 
-// API Routes
-const tilesRoute = require('./api/tiles')
-app.use('/api/tiles', tilesRoute)
-
-// Health check or root route
-app.get('/', (req, res) => {
-  res.send('API ready and running.')
-})
-
-// Start server
+// 4) Start the server
 app.listen(PORT, () => {
-  console.log(`✅ API server listening on http://localhost:${PORT}`)
-})
+  console.log(`Server running on port ${PORT}`);
+});

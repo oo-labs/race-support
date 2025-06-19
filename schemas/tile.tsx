@@ -1,6 +1,5 @@
-// schemas/tile.ts
 import React from 'react';
-import { defineType, defineField } from 'sanity';
+import {defineType, defineField} from 'sanity';
 
 export default defineType({
   name: 'tile',
@@ -18,26 +17,18 @@ export default defineType({
     select: {
       title: 'title',
       spriteUrl: 'sprite.asset.url',
-      x: 'x',
-      y: 'y',
-      width: 'width',
-      height: 'height'
+      x: 'x', y: 'y', width: 'width', height: 'height'
     },
-    prepare({ title, spriteUrl, x, y, width, height }) {
+    prepare({title, spriteUrl, x, y, width, height}) {
       const style: React.CSSProperties = {
         objectFit: 'none',
         objectPosition: `-${x}px -${y}px`,
         width: `${width}px`,
-        height: `${height}px`
+        height: `${height}px`,
       };
       return {
         title,
-        media: () =>
-          React.createElement('img', {
-            src: spriteUrl,
-            style,
-            alt: title
-          })
+        media: () => <img src={spriteUrl} style={style} alt={title}/>
       };
     }
   }

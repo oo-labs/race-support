@@ -1,24 +1,32 @@
+// api/tiles.js
 import express from 'express';
-import sanityClient from '@sanity/client';
+import { createClient } from '@sanity/client';
 
 const router = express.Router();
-const client = sanityClient({
+
+// Initialize Sanity client properly
+const client = createClient({
   projectId: 'ie8xrz97',
   dataset: 'production',
-  useCdn: true
+  apiVersion: '2023-01-01',
+  useCdn: true,
 });
 
-router.get('/api/tiles', async (_req, res) => {
-  const tiles = await client.fetch(`*[_type == "tile"]{
-    _id,
-    title,
-    "spriteUrl": sprite.asset->url,
-    x,
-    y,
-    width,
-    height
-  } | order(_createdAt asc)`);
-  res.json(tiles);
+router.get('/tiles', async (_req, res) => {
+  try {
+    const tiles = await client.fetch(
+      `*[_type=="tile"]{
+        _id,
+        title,
+        "spriteUrl": sprite.asset->url,
+        x, y, width, height
+      } | order(_createdAt asc)`
+    );
+    res.json(tiles);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to fetch tiles' });
+  }
 });
 
 export default router;

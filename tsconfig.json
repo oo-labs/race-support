@@ -1,17 +1,21 @@
 {
+  // No more extends — we’ll keep it self-contained
   "compilerOptions": {
-    "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "target": "ESNext",
+    "module": "ESNext",
+    "jsx": "react-jsx",
     "allowJs": true,
-    "skipLibCheck": true,
     "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "Preserve",
-    "moduleDetection": "force",
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true
+    "baseUrl": ".",
+    "paths": {
+      // if you use aliases, otherwise you can remove this
+      "@/schemas/*": ["schemas/*"],
+      "@/components/*": ["components/*"]
+    }
   },
-  "include": ["**/*.ts", "**/*.tsx", "api/tiles.js", "schemas/vite.config.js"],
-  "exclude": ["node_modules"]
+  "include": [
+    "sanity.config.ts",
+    "schemas/**/*.ts",
+    "schemas/**/*.tsx"
+  ]
 }
