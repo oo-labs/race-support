@@ -1,21 +1,14 @@
+// ========================================
+// 5) tsconfig.json
+// ========================================
 {
-  // No more extends — we’ll keep it self-contained
-  "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "jsx": "react-jsx",
-    "allowJs": true,
-    "strict": true,
-    "baseUrl": ".",
-    "paths": {
-      // if you use aliases, otherwise you can remove this
-      "@/schemas/*": ["schemas/*"],
-      "@/components/*": ["components/*"]
-    }
-  },
-  "include": [
-    "sanity.config.ts",
-    "schemas/**/*.ts",
-    "schemas/**/*.tsx"
-  ]
+"compilerOptions": {
+"target": "ESNext",
+"module": "ESNext",
+"jsx": "react-jsx",
+"allowJs": true,
+"strict": true,
+"baseUrl": "."
+},
+"include": ["sanity.config.ts", "schemas/**/*.{ts,tsx}"]
 }
