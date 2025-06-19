@@ -1,42 +1,24 @@
-const express = require('express')
-const router = express.Router()
-require('dotenv').config()
+import express from 'express';
+import sanityClient from '@sanity/client';
 
-const { createClient } = require('@sanity/client')
+const router = express.Router();
+const client = sanityClient({
+  projectId: 'ie8xrz97',
+  dataset: 'production',
+  useCdn: true
+});
 
-// Setup Sanity client
-const client = createClient({
-  projectId: process.env.SANITY_PROJECT_ID,
-  dataset: process.env.SANITY_DATASET,
-  apiVersion: '2023-06-01',
-  useCdn: false,
-  token: process.env.SANITY_API_TOKEN,
-})
-
-router.get('/', async (req, res) => {
-  const group = req.query.group || 'race-support'
-  console.log(`📡 Querying Sanity with group: ${group}`)
-
-  const query = `*[_type == "uiTile" && group == $group]{
+router.get('/api/tiles', async (_req, res) => {
+  const tiles = await client.fetch(`*[_type == "tile"]{
     _id,
     title,
+    "spriteUrl": sprite.asset->url,
     x,
     y,
     width,
-    height,
-    order,
-    link,
-    group
-  }`
+    height
+  } | order(_createdAt asc)`);
+  res.json(tiles);
+});
 
-  try {
-    const data = await client.fetch(query, { group })
-    console.log(`✅ Fetched ${data.length} tiles`)
-    res.json(data)
-  } catch (err) {
-    console.error('❌ Sanity fetch error:', err.message)
-    res.status(500).json({ error: 'Failed to fetch tiles' })
-  }
-})
-
-module.exports = router
+export default router;
